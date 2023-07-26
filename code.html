@@ -47,13 +47,13 @@
                             <a class="nav-link active" aria-current="page" href="/code.html">The Code</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">The Repository(link)</a>
+                            <a class="nav-link" href="https://github.com/A-Balan/Palindrome">The Repository</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://abalan.netlify.app/">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Blog link</a>
+                            <a class="nav-link" href="#">Blog</a>
                         </li>
                     </ul>
                 </div>
@@ -68,27 +68,104 @@
             <div class="col-12 col-md-8">
                 <pre class="line-numbers">
                     <code class="language-js">
-                        function displayMessage() {
-
-                            let inputBox = document.getElementById("message");
+                        function getValues() {
+                            // retrieve input
+                            let userString = document.getElementById('userString').value;
+                            // check
+                            let palCheck = checkForPalindrome(userString);
+                            // display
+                            displayResults(palCheck);
+                        }
                         
-                            let message = inputBox.value;
+                        function checkForPalindrome(userString) {
+                            // Reverse
+                            // removes capitalization
+                            userString = userString.toLowerCase();
                         
-                            Swal.fire(
-                                {
-                                    backdrop: false,
-                                    title: "Madam Palindrome",
-                                    text: message
-                                }
-                            );
+                            // regex -remove space and special characters-global
+                            let regex = /[^a-z0-9]/g;
+                            // anything not regex, replace with empty string = a sanitized string*
+                            userString = userString.replace(regex, '');
+                            // a backwards string*
+                            let reverseString = [];
+                        
+                            // decrimenting for-loop
+                            for (let index = userString.length - 1; index >= 0; index--) {
+                        
+                                // aka reverseString += userString[index] making a reverse array
+                                reverseString = reverseString + userString[index];
+                            }
+                            // we now have 2 strings
+                        
+                            let returnAlert = {
+                                // message: "Nice! It's a Palindrome",
+                                // reversed: "olleH"
+                                // The object starts as a blank slate. Then when we tell it that it has a "message" property,
+                                // it says "ok" and now it has that, and we can access it by typing returnAlert.message.
+                            };
+                        
+                            // if the reverse and normal strings are equal- return Nice! madam-madam
+                            if (reverseString == userString) {
+                                returnAlert.message = "Nice! It's a Palindrome";
+                                returnAlert.reversed = reverseString;
+                            } else {
+                                returnAlert.message = "Sorry, not a Palindrome";
+                                returnAlert.reversed = reverseString;
+                            }
+                        
+                        
+                        
+                            // An object is multiple related items, set equal to certain values, inside of curly brackets, that has a name
+                        
+                            // using an object is necessary here because we want to use multiple values from this function
+                        
+                            // The values in question are returnAlert.reversed, and returnAlert.message
+                        
+                            // We could also do the same thing with an array. However, here, an object makes more logical sense.
+                        
+                            // You would need to use an index to access items in an array, but here you can just use the property name
+                            //                                                                                   ->(returnAlert.message)
+                        
+                            return returnAlert;
+                        }
+                        
+                        function displayResults(returnAlert) {
+                        
+                            // returnAlert is still an object by the time this codeblock is reached.
+                            // It still has a "message" property and a "reversed" property, both of which are used here.
+                        
+                            if (returnAlert.message == "Nice! It's a Palindrome") {
+                                document.getElementById('alertHeading').innerHTML = returnAlert.message;
+                                document.getElementById('message').innerHTML = `Backwards, your text says: ${returnAlert.reversed}`;
+                                document.getElementById('alert').classList.remove('invisible');
+                                document.getElementById('alert').classList.remove('alert-danger');
+                                document.getElementById('alert').classList.add('alert-success');
+                            }
+                            else {
+                                document.getElementById('alertHeading').innerHTML = returnAlert.message;
+                                document.getElementById('message').innerHTML = `Backwards, your text says: ${returnAlert.reversed}`;
+                                document.getElementById('alert').classList.remove('invisible');
+                                document.getElementById('alert').classList.remove('alert-success');
+                                document.getElementById('alert').classList.add('alert-danger');
+                            }
                         }
                     </code>
                 </pre>
             </div>
             <div class="col-12 col-md-4">
-                <p>The code is structured in one function</p>
-                <h5>displayMessage</h5>
-                <p>Shows a SweetAlert with the value of the <code>message</code> variable</p>
+                <h5>Walkthrough</h5>
+                <ul>
+                    <li>Retrieve input by Id</li>
+                    <li>remove capitilization</li>
+                    <li>Use regex to target special characters and replace with an empty string</li>
+                    <li>Initialize the reverse array, and run it through a decrimenting for loop, adding values</li>
+                    <li>We now have a normal string and a reverse string (strings are actually arrays)</li>
+                    <li>We create an object, because we want to have access to multiple returns at a time</li>
+                    <li>if the reverse string and normal string are the same- its a palindrome!</li>
+                    <li>we set the returnAlert{} object to have message and reversed parameters</li>
+                    <li>The returnAlert{} is passed to the display function. It still has two parameters.</li>
+                    <li>Classes are set to the alert message, to compliment the output message</li>
+                </ul>
             </div>
         </div>
     </main>
