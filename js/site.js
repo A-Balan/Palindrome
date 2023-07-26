@@ -13,7 +13,7 @@ function checkForPalindrome(userString) {
     userString = userString.toLowerCase();
 
     // regex -remove space and special characters-global
-    let regex = /[^a-z0-9]/g;
+    let regex = /[^a-z0-9]/gi;
     // anything not regex, replace with empty string = a sanitized string*
     userString = userString.replace(regex, '');
     // a backwards string*
